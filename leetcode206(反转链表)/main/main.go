@@ -57,17 +57,24 @@ type ListNode struct {
 	Next *ListNode
 }
 
+// 反转链表，迭代版本， O(n)
 func reverseList(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil{
 		return head
 	}
-	for {
-		if head.Next == nil { // 反转结束
-			return head
-		}
-		head.Next.Next = head
-		head = head.Next
+	var pre *ListNode
+	cur := head
+	for cur != nil {
+		// 保留被断开的节点
+		next := cur.Next
+		// 开始移情别恋
+		cur.Next = pre
+		// 重新开始
+		pre = cur
+		cur = next
+		
 	}
+	return pre
 }
 
 func main() {
