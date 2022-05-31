@@ -11,7 +11,7 @@ type ListNode struct {
 	Next *ListNode
 }
 
-
+// 快慢指针
 func hasCycle(head *ListNode) bool {
 	if head == nil || head.Next == nil  { //头结点为空，或者少于2个节点，都无法成环
 		return false
@@ -25,12 +25,31 @@ func hasCycle(head *ListNode) bool {
 		if fast == nil || fast.Next == nil {
 			return  false
 		}
-		// 快指针每次都两步，慢指针每次走一步，如果相遇了，则说明有环
+		// 快指针每次走两步，慢指针每次走一步，如果相遇了，则说明有环
 		fast = fast.Next.Next
 		slow = slow.Next
 		if fast == slow {
 			return true
 		}
+	}
+}
+
+// 迭代法，判断是否曾经访问过
+func hasCycleV2(head *ListNode) bool{
+	if head == nil || head.Next == nil  { //头结点为空，或者少于2个节点，都无法成环
+		return false
+	}
+	// 申请一个map[*ListNode]int
+	nodeMap := make(map[*ListNode]int)
+	for {
+		if head == nil || head.Next == nil {
+			return false
+		}
+		if nodeMap[head] == 1 {
+			return true
+		}
+		nodeMap[head] = 1
+		head = head.Next
 	}
 }
 
