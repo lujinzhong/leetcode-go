@@ -72,5 +72,20 @@ func reverseList(head *ListNode) *ListNode {
 	return head
 }
 
+// 快慢指针
+func reverseListV2(head *ListNode) *ListNode {
+	fast := head
+	slow := head
+	for fast != nil && fast.Next != nil {
+		// 1,2,3
+		// 1,2,3,4
+		// 1,2,3,4,5
+		fast = fast.Next.Next
+		slow = slow.Next
+	}
+	return slow
+}
+
+
 func main() {
 }
