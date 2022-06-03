@@ -64,6 +64,36 @@ func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	return head
 }
 
+//执行用时：0 ms, 在所有 Go 提交中击败了 100.00% 的用户
+//内存消耗：2.1 MB, 在所有 Go 提交中击败了 99.95% 的用户
+// 用双指针来实现，让两个指针相差 n 个空间，因此当后续指针走到最后一个时，前续指针刚好在要删除的前一个节点中
+func removeNthFromEndV2(head *ListNode, n int) *ListNode {
+	if  head.Next == nil { // 1.只有一个节点
+		return nil
+	}
+
+	first := head
+	second := head
+	// 先让 second 往后走 n-1 次
+	for i := 0; i < n; i++ {
+		second =  second.Next
+	}
+	// 如果 second == nil ，说明要删除的是第一个元素
+	if second == nil {
+		head = head.Next
+		return head
+	}
+
+	// 然后两个指针再一起走, 直到 second 指针刚好在最后一个
+	for second.Next != nil {
+		first = first.Next
+		second = second.Next
+	}
+	// 此时 first 刚好是在要删除的前一个节点
+	first.Next = first.Next.Next
+	return head
+}
+
 func main() {
 
 }
