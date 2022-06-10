@@ -85,7 +85,6 @@ func qSort(arr [8]int) [8]int {
 	return arr
 }
 
-
 func main() {
 	arr := [8]int{3, 6, 7, 5, 1, 2, 10, 14}
 	fmt.Println(bubblingSort(arr))

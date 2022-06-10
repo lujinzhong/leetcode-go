@@ -36,17 +36,16 @@ import (
 //
 // Related Topics 双指针 字符串 👍 530 👎 0
 
-
 // 注：这道题要注意非字符的元素 ASCII 字符中 A-Z 65 到 90，a-z 97-122
 // 1. 剔除无效元素，翻转字符串和原有字符串比较
-func a1 (s string) bool{
+func a1(s string) bool {
 	if s == "" {
 		return true
 	}
 	var sArr []rune
 	for _, v := range s {
 		if isLetterOrNumber(v) {
-			sArr = append(sArr,v)
+			sArr = append(sArr, v)
 		}
 	}
 	if len(sArr) == 1 {
@@ -67,7 +66,7 @@ func a1 (s string) bool{
 
 func isLetterOrNumber(s rune) bool {
 	// a ~ z , A ~ Z, 0-9
-	if (s >= 'a' && s <= 'z') || (s >= 'A' && s <= 'Z') || (int(s) >= 48 && int(s)<= 57) { // 字符串 0和9分别对应48和57
+	if (s >= 'a' && s <= 'z') || (s >= 'A' && s <= 'Z') || (int(s) >= 48 && int(s) <= 57) { // 字符串 0和9分别对应48和57
 		return true
 	}
 	return false
@@ -81,6 +80,7 @@ func isLetterOrNumberV2(s rune) bool {
 	}
 	return false
 }
+
 // 双指针
 func a2(s string) bool {
 	if s == "" {
@@ -88,22 +88,22 @@ func a2(s string) bool {
 	}
 
 	length := len(s)
-	left := 0 // 左指针
+	left := 0           // 左指针
 	right := length - 1 // 右指针
 
 	for left <= right {
 		// 优先固定左指针
 		if !isLetterOrNumber(rune(s[left])) { //左边第一个满足条件的
-			left ++
+			left++
 			continue
 		}
 
-		if  !isLetterOrNumber(rune(s[right])) { // 过滤不满足的
-			right --
+		if !isLetterOrNumber(rune(s[right])) { // 过滤不满足的
+			right--
 		} else { // 满足，判断是否相等
 			if strings.ToLower(string(s[left])) == strings.ToLower(string(s[right])) { // 这里性能比较差
-				left ++ // 匹配上了，左指针+1， 右指针减一
-				right --
+				left++ // 匹配上了，左指针+1， 右指针减一
+				right--
 				continue // 继续匹配
 			} else {
 				return false // 没匹配上，直接GG
@@ -122,34 +122,34 @@ func a3(s string) bool {
 	if length == 1 {
 		return true
 	}
-	left := 0 // 左指针
- 	right := length - 1 // 右指针
+	left := 0           // 左指针
+	right := length - 1 // 右指针
 
 	for left <= right {
 		// 优先固定左指针
 		if !isLetterOrNumberV2(rune(s[left])) { //左边第一个满足条件的
-			left ++
+			left++
 			continue
 		}
 
-		if  !isLetterOrNumberV2(rune(s[right])) { // 过滤不满足的
-			right --
+		if !isLetterOrNumberV2(rune(s[right])) { // 过滤不满足的
+			right--
 		} else { // 满足，判断是否相等
 			if s[left] == s[right] { // 如果是同样大小写字符，则可以直接比较
-				left ++ // 匹配上了，左指针+1， 右指针减一
-				right --
+				left++ // 匹配上了，左指针+1， 右指针减一
+				right--
 				continue // 继续匹配
 			} else if (s[right] >= 65 && s[right] <= 90) && // 右指针是 A-Z
-				(s[left] >= 97 && s[left] <= 122) &&  // 左指针是 a-z
-				(s[left] - s[right] == 32){ // 相减为 32 ，说明是匹配的
-				left ++ // 匹配上了，左指针+1， 右指针减一
-				right --
+				(s[left] >= 97 && s[left] <= 122) && // 左指针是 a-z
+				(s[left]-s[right] == 32) { // 相减为 32 ，说明是匹配的
+				left++ // 匹配上了，左指针+1， 右指针减一
+				right--
 				continue // 继续匹配
 			} else if (s[left] >= 65 && s[left] <= 90) && // 左指针是 A-Z
-				(s[right] >= 97 && s[right] <= 122) &&  // 右指针是 a-z
-				(s[right] - s[left] == 32){ // 相减为 32 ，说明是匹配的
-				left ++ // 匹配上了，左指针+1， 右指针减一
-				right --
+				(s[right] >= 97 && s[right] <= 122) && // 右指针是 a-z
+				(s[right]-s[left] == 32) { // 相减为 32 ，说明是匹配的
+				left++ // 匹配上了，左指针+1， 右指针减一
+				right--
 				continue // 继续匹配
 			} else {
 				return false // 没匹配上，直接GG

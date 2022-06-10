@@ -18,11 +18,11 @@ import "fmt"
 func isValid(s string) bool {
 
 	// 如果是奇数个，直接不通过
-	if len(s) % 2 == 1 {
+	if len(s)%2 == 1 {
 		return false
 	}
 	// 先搞个 map 映射下关系
-	tempMap := map[string]string{")" : "(", "]" : "[", "}" :  "{"}
+	tempMap := map[string]string{")": "(", "]": "[", "}": "{"}
 	// 初始化栈
 	stack := NewStack()
 	for _, v := range s {
@@ -79,8 +79,6 @@ func (s *Stack) Pop() interface{} {
 	return res
 
 }
-
-
 
 func main() {
 	s := "()"

@@ -42,7 +42,6 @@ package main
 //
 // Related Topics 递归 链表 👍 2546 👎 0
 
-
 //leetcode submit region begin(Prohibit modification and deletion)
 /**
  * Definition for singly-linked list.
@@ -53,13 +52,13 @@ package main
  */
 
 type ListNode struct {
-	Val int
+	Val  int
 	Next *ListNode
 }
 
 // 反转链表，迭代版本， O(n)
 func reverseList(head *ListNode) *ListNode {
-	if head == nil || head.Next == nil{
+	if head == nil || head.Next == nil {
 		return head
 	}
 	var pre *ListNode
@@ -72,7 +71,7 @@ func reverseList(head *ListNode) *ListNode {
 		// 重新开始
 		pre = cur
 		cur = next
-		
+
 	}
 	return pre
 }

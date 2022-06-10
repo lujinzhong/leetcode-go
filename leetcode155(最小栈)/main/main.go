@@ -35,7 +35,7 @@ type Node struct {
 }
 
 type MinStack struct {
-	topNode *Node
+	topNode  *Node
 	minValue int
 }
 

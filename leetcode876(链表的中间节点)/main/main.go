@@ -34,7 +34,6 @@ package main
 //
 // Related Topics 链表 双指针 👍 579 👎 0
 
-
 //leetcode submit region begin(Prohibit modification and deletion)
 /**
  * Definition for singly-linked list.
@@ -45,9 +44,10 @@ package main
  */
 
 type ListNode struct {
-	Val int
+	Val  int
 	Next *ListNode
 }
+
 // 双指针，遍历一次获得长度，再遍历一半长度
 func reverseList(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
@@ -64,9 +64,9 @@ func reverseList(head *ListNode) *ListNode {
 		cur = cur.Next
 		length++
 	}
-	time := length/2
+	time := length / 2
 	// 前置指针回归 time 次
-	for i:=0 ; i < time; i++ {
+	for i := 0; i < time; i++ {
 		head = head.Next
 	}
 	return head
@@ -85,7 +85,6 @@ func reverseListV2(head *ListNode) *ListNode {
 	}
 	return slow
 }
-
 
 func main() {
 }
