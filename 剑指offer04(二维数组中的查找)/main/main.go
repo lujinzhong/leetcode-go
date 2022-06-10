@@ -2,52 +2,60 @@ package main
 
 import "fmt"
 
-//找出数组中重复的数字。
-//在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。
-//输入：
-//[2, 3, 1, 0, 2, 5, 3]
-//输出：2 或 3
+//在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个高效的函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
 //限制：
-//2 <= n <= 100000
+//
+//0 <= n <= 1000
+//0 <= m <= 1000
 
-// 遍历 + 哈希
-func findRepeatNumber(nums []int) int {
-	n := len(nums)
-	temp := make(map[int]bool)
-	for i := 0; i < n; i++ {
-		if temp[nums[i]] {
-			return nums[i]
-		}
-		temp[nums[i]] = true
+// 这道题最简单的做法就是两个 for 循环，时间为 O（n*m)
+// 第二种做法是，每一行数组都搞个二分，时间为 O （nlogm)
+func findNumberIn2DArray(matrix [][]int, target int) bool {
+	// 如果是个空数组，直接GG
+	if len(matrix) == 0 {
+		return false
 	}
-	return -1
+	length := len(matrix)
+	for i := 0; i < length; i++ {
+		if len(matrix[i]) == 0 {
+			continue
+		}
+		high := len(matrix[i]) - 1
+		if matrix[i][high] < target { // 如果最大的都比目标小，就没有必要再查了
+			continue
+		}
+		// 走二分
+		res := binarySearch(matrix[i], target)
+		if res == -1 {
+			continue
+		} else {
+			return true
+		}
+	}
+	return false
 }
 
-// 遍历 + 原地置换
-//执行用时：24 ms, 在所有 Go 提交中击败了 98.69% 的用户
-//内存消耗：8.5 MB, 在所有 Go 提交中击败了 65.79% 的用户
-func findRepeatNumberV2(nums []int) int {
-	n := len(nums)
-	i := 0 // 指针
-	for i < n {
-		val := nums[i]
-		if val != i {
-			// 替换前先判断是不是已经被占坑了
-			if nums[val] == val {
-				return val
-			}
-			// 否则替换位置
-			temp := nums[val]
-			nums[val] = val
-			nums[i] = temp
+// 标准二分法
+func binarySearch(arr []int, val int) int {
+	low := 0
+	high := len(arr) - 1
+	for low <= high {
+		mid := (high + low) / 2 // low+(high-low)/2 这种可以避免溢出
+		if arr[mid] == val {
+			return mid
+		} else if arr[mid] > val {
+			high = mid - 1
 		} else {
-			i++
+			low = mid + 1
 		}
 	}
 	return -1
 }
 
 func main() {
-	fmt.Println(findRepeatNumber([]int{1, 2, 4, 2, 4}))
-	fmt.Println(findRepeatNumberV2([]int{1, 2, 4, 2, 4}))
+	fmt.Println(findNumberIn2DArray([][]int{{1, 4, 7, 11, 15}, {2, 5, 8, 12, 19}, {3, 6, 9, 16, 22}, {10, 13, 14, 17, 24}, {18, 21, 23, 26, 30}}, 5))
+	fmt.Println(findNumberIn2DArray([][]int{{-1}, {-1}}, 0))
+	fmt.Println(findNumberIn2DArray([][]int{{}, {}}, 0))
+	fmt.Println(findNumberIn2DArray([][]int{{1, 4}, {2, 5}}, 2))
+	fmt.Println(findNumberIn2DArray([][]int{{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}, {16, 17, 18, 19, 20}, {21, 22, 23, 24, 25}}, 19))
 }
