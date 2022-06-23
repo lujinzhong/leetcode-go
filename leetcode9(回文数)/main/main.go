@@ -9,7 +9,10 @@ package main
 //输出：false
 //解释：从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。
 
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+)
 
 func isPalindrome(x int) bool {
 	if x == 0 {
@@ -34,5 +37,37 @@ func isPalindrome(x int) bool {
 	return false
 }
 
+// 直接反转数字
+func isPalindromeV2(x int) bool {
+	// 2312
+	// 121
+	if x < 0 || (x%10 == 0 && x != 0) {
+		return false
+	}
+	num := x
+	res := 0
+	for num > 0 {
+		res = res*10 + num%10
+		num = num / 10
+	}
+	return x == num
+}
+
+// 只反转一半的数字
+func isPalindromeV3(x int) bool {
+	if x < 0 || (x%10 == 0 && x != 0) {
+		return false
+	}
+	num := x
+	res := 0
+	for num > res {
+		res = res*10 + num%10
+		num = num / 10
+	}
+	// 此时如果是偶数，则是相等，如果是奇数位，则结果/10 再判断
+	return res == num || res/10 == num
+}
+
 func main() {
+	fmt.Println(isPalindromeV2(121))
 }
