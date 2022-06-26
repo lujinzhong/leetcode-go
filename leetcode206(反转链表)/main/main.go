@@ -58,6 +58,10 @@ type ListNode struct {
 
 // 反转链表，迭代版本， O(n)
 func reverseList(head *ListNode) *ListNode {
+	// nil(pre) 1(head)->2->3
+	// nil <-1(pre) 2(head)->3
+	// nil<-1<-2(pre) 3(head)->nil
+	// nil<-1<-2<-3(pre) nil(head)
 	if head == nil || head.Next == nil {
 		return head
 	}
@@ -71,9 +75,25 @@ func reverseList(head *ListNode) *ListNode {
 		// 重新开始
 		pre = cur
 		cur = next
-
 	}
 	return pre
+}
+
+// 递归版本
+// nil(pre) head(1) x
+func reverseListV2(head *ListNode) *ListNode {
+	var f func(*ListNode, *ListNode) *ListNode
+	f = func(pre, head *ListNode) *ListNode {
+		if head == nil {
+			return pre
+		}
+		// 保留要抛弃的节点
+		next := head.Next
+		head.Next = pre
+		return f(head, next)
+	}
+
+	return f(nil, head)
 }
 
 func main() {
